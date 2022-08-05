@@ -1,35 +1,73 @@
-﻿using System;
-
-namespace Diamond;
+﻿namespace Diamond;
 
 public class Diamond
 {
-    private static readonly char[] alphabeth = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
+    private static readonly char[] alphabeth = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
 
     public static void Main()
     {
-        int row = 0;
-        int spaceCount = 0;
-        for (int i = 0; i <alphabeth.Length; i++)
+        string toFind = Console.ReadLine();
+
+        int end = FindPosition(toFind.First());
+
+        MathRight(0, end);
+
+        MathLeft(end - 1, 0);
+    }
+
+    private static int FindPosition(char v)
+    {
+        for (int i = 0; i < alphabeth.Length; i++)
         {
-            do
+            if (alphabeth[i].ToString().ToLower().Equals(v.ToString().ToLower()))
             {
-                Console.Write(alphabeth[i]);
+                return i + 1;
+            }
+        }
 
-                if(row != 0 && row < alphabeth.Length)
-                {
-                    spaceCount = 0;
-                    do
-                    {
-                        Console.Write(' ');
-                        spaceCount++;
-                    } while (spaceCount <= row);
+        return 0;
+    }
 
-                    Console.Write(alphabeth[i]);
-                }
-                Console.WriteLine();
-            } while (i < row);
-            row++;            
+    private static void MathRight(int start, int stop)
+    {
+        for (int i = start; i < stop; i++)
+        {
+            PrintLine(alphabeth[i], (i * 2 - 1), (stop - 1 - i));
+        }
+    }
+
+    private static void MathLeft(int start, int stop)
+    {
+        for (int i = start - 1; i >= stop; i--)
+        {
+            PrintLine(alphabeth[i], (i * 2 - 1), (start - i));
+        }
+    }
+
+    private static void PrintLine(char letter, int nSpaces, int nBeforeSpaces)
+    {
+        if (nBeforeSpaces > 0)
+        {
+            PrintWhiteSpaces(nBeforeSpaces);
+        }
+
+        Console.Write(letter);
+
+        if (nSpaces > 0)
+        {
+            PrintWhiteSpaces(nSpaces);
+
+            Console.Write(letter);
+        }
+
+        Console.WriteLine();
+    }
+
+    private static void PrintWhiteSpaces(int howMany)
+    {
+        for (int i = 0; i < howMany; i++)
+        {
+            Console.Write(' ');
         }
     }
 }
