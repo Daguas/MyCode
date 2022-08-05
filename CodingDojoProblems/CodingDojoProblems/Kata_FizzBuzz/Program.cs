@@ -8,21 +8,17 @@ public class FizzBuzz
         {
             var stringResult = "";
 
-            var isWeirdN = false;
-
             if (CheckForFizz(i))
             {
                 stringResult = "Fizz";
-                isWeirdN = true;
             }
 
             if (CheckForBuzz(i))
             {
                 stringResult += "Buzz";
-                isWeirdN = true;
             }
 
-            if (!isWeirdN)
+            if (stringResult.Length == 0)
             {
                 stringResult = i.ToString();
             }
