@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kata_GameOfLife", "Kata_1\K
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kata_SocialNetwork", "Kata_SocialNetwork\Kata_SocialNetwork.csproj", "{DEFB29DB-AF93-4D8E-8B35-39A5CD601F3A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kata_FizzBuzz", "Kata_FizzBuzz\Kata_FizzBuzz.csproj", "{1F596827-5A31-4C15-8155-6537F6E832A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kata_FizzBuzz", "Kata_FizzBuzz\Kata_FizzBuzz.csproj", "{1F596827-5A31-4C15-8155-6537F6E832A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kata_OCR", "Kata_OCR\Kata_OCR.csproj", "{B3C9D218-0CE1-411C-8989-206379B0AF1A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{1F596827-5A31-4C15-8155-6537F6E832A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F596827-5A31-4C15-8155-6537F6E832A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F596827-5A31-4C15-8155-6537F6E832A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3C9D218-0CE1-411C-8989-206379B0AF1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3C9D218-0CE1-411C-8989-206379B0AF1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3C9D218-0CE1-411C-8989-206379B0AF1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3C9D218-0CE1-411C-8989-206379B0AF1A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
