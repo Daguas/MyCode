@@ -8,68 +8,110 @@ public class OCR
     public static void Main()
     {
         string[,] matrix = ReadFile();
-        char[] accountCode = new char[9];
+        string[] accountCode = new string[9];
+        bool invalidCharFound = false;
 
-        Parallel.For(1, 10, i =>
+        ParallelLoopResult x = Parallel.For(1, 10, i =>
         {
             if (CheckForOnes(i, matrix))
             {
-                accountCode[i - 1] = '1';
+                accountCode[i - 1] = "1";
                 return;
             }
 
             if (CheckForTwos(i, matrix))
             {
-                accountCode[i - 1] = '2';
+                accountCode[i - 1] = "2";
                 return;
             }
 
             if (CheckForThrees(i, matrix))
             {
-                accountCode[i - 1] = '3';
+                accountCode[i - 1] = "3";
                 return;
             }
 
             if (CheckForFours(i, matrix))
             {
-                accountCode[i - 1] = '4';
+                accountCode[i - 1] = "4";
                 return;
             }
 
             if (CheckForFives(i, matrix))
             {
-                accountCode[i - 1] = '5';
+                accountCode[i - 1] = "5";
                 return;
             }
 
             if (CheckForSixs(i, matrix))
             {
-                accountCode[i - 1] = '6';
+                accountCode[i - 1] = "6";
                 return;
             }
 
             if (CheckForSevens(i, matrix))
             {
-                accountCode[i - 1] = '7';
+                accountCode[i - 1] = "7";
                 return;
             }
 
             if (CheckForEights(i, matrix))
             {
-                accountCode[i - 1] = '8';
+                accountCode[i - 1] = "8";
                 return;
             }
 
             if (CheckForNines(i, matrix))
             {
-                accountCode[i - 1] = '9';
+                accountCode[i - 1] = "9";
                 return;
             }
 
-            accountCode[i - 1] = '0';
+            if (CheckForZeros(i, matrix))
+            {
+                accountCode[i - 1] = "0";
+                return;
+            }
+
+            accountCode[i - 1] = "?";
+            invalidCharFound = true;
+            return;
         });
 
-        Console.WriteLine(accountCode);
+        if (invalidCharFound)
+        {
+            accountCode.ToList().ForEach(n => Console.Write(n));
+            Console.Write(" ILL");
+        }
+        else if (CheckSumCalculator(accountCode))
+        {
+            accountCode.ToList().ForEach(n => Console.Write(n));
+        }
+        else
+        {
+            accountCode.ToList().ForEach(n => Console.Write(n));
+            Console.Write(" ERR");
+        }
+
+        Console.WriteLine();
+    }
+
+    private static bool CheckForZeros(int i, string[,] matrix)
+    {
+        int till = i * 3 - 1;
+        int when = i * 3 - 3;
+
+        if (!matrix[1, when].ToString().Equals(" ") &&
+            matrix[1, when+1].ToString().Equals(" ") &&
+           !matrix[2, when].ToString().Equals(" ") &&
+           !matrix[1, till].ToString().Equals(" ") &&
+           !matrix[2, till].ToString().Equals(" ")
+           )
+        {
+            return true;
+        }
+
+        return false;
     }
 
     private static bool CheckForOnes(int i, string[,] matrix)
@@ -179,7 +221,8 @@ public class OCR
         int when = i * 3 - 3;
 
         if (!matrix[0, when + 1].ToString().Equals(" ") &&
-           matrix[1, when + 1].ToString().Equals(" "))
+           matrix[1, when + 1].ToString().Equals(" ") &&
+           matrix[2, when + 1].ToString().Equals(" "))
         {
             return true;
         }
@@ -194,6 +237,7 @@ public class OCR
 
         if (!matrix[1, when].ToString().Equals(" ") &&
            !matrix[2, when].ToString().Equals(" ") &&
+           !matrix[1, when+1].ToString().Equals(" ") &&
            !matrix[1, till].ToString().Equals(" ") &&
            !matrix[2, till].ToString().Equals(" ")
            )
@@ -236,5 +280,17 @@ public class OCR
         }
 
         return matrix;
+    }
+
+    private static bool CheckSumCalculator(string[] accountCode)
+    {
+        var sum = 0;
+
+        for (int i = accountCode.Length - 1; i >= 0; i--)
+        {
+            sum += int.Parse(accountCode[i].ToString()) * (accountCode.Length - i);
+        }
+
+        return sum % 11 == 0;
     }
 }
