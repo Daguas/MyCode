@@ -4,6 +4,7 @@ public class OCR
 {
     public const int nLines = 3;
     public const int nChars = 27;
+    public const int size = 3;
 
     public static void Main()
     {
@@ -89,8 +90,7 @@ public class OCR
         }
         else
         {
-            accountCode.ToList().ForEach(n => Console.Write(n));
-            Console.Write(" ERR");
+            CheckSolutionsERR(accountCode);
         }
 
         Console.WriteLine();
@@ -98,11 +98,11 @@ public class OCR
 
     private static bool CheckForZeros(int i, string[,] matrix)
     {
-        int till = i * 3 - 1;
-        int when = i * 3 - 3;
+        int till = i * size - 1;
+        int when = i * size - size;
 
         if (!matrix[1, when].ToString().Equals(" ") &&
-            matrix[1, when+1].ToString().Equals(" ") &&
+            matrix[1, when + 1].ToString().Equals(" ") &&
            !matrix[2, when].ToString().Equals(" ") &&
            !matrix[1, till].ToString().Equals(" ") &&
            !matrix[2, till].ToString().Equals(" ")
@@ -116,8 +116,8 @@ public class OCR
 
     private static bool CheckForOnes(int i, string[,] matrix)
     {
-        int till = i * 3 - 1;
-        int when = i * 3 - 3;
+        int till = i * size - 1;
+        int when = i * size - size;
 
         for (int c = when; c < till; c++)
         {
@@ -134,8 +134,8 @@ public class OCR
 
     private static bool CheckForTwos(int i, string[,] matrix)
     {
-        int till = i * 3 - 1;
-        int when = i * 3 - 3;
+        int till = i * size - 1;
+        int when = i * size - size;
 
         if (!matrix[2, when].ToString().Equals(" ") &&
            matrix[2, till].ToString().Equals(" "))
@@ -148,8 +148,8 @@ public class OCR
 
     private static bool CheckForThrees(int i, string[,] matrix)
     {
-        int till = i * 3 - 1;
-        int when = i * 3 - 3;
+        int till = i * size - 1;
+        int when = i * size - size;
 
         if (matrix[1, when].ToString().Equals(" ") &&
            matrix[2, when].ToString().Equals(" ") &&
@@ -166,8 +166,8 @@ public class OCR
 
     private static bool CheckForFours(int i, string[,] matrix)
     {
-        int till = i * 3 - 1;
-        int when = i * 3 - 3;
+        int till = i * size - 1;
+        int when = i * size - size;
 
         if (!matrix[1, when].ToString().Equals(" ") &&
            matrix[2, when].ToString().Equals(" ") &&
@@ -184,8 +184,8 @@ public class OCR
 
     private static bool CheckForFives(int i, string[,] matrix)
     {
-        int till = i * 3 - 1;
-        int when = i * 3 - 3;
+        int till = i * size - 1;
+        int when = i * size - size;
 
         if (!matrix[1, when].ToString().Equals(" ") &&
            matrix[2, when].ToString().Equals(" ") &&
@@ -201,8 +201,8 @@ public class OCR
 
     private static bool CheckForSixs(int i, string[,] matrix)
     {
-        int till = i * 3 - 1;
-        int when = i * 3 - 3;
+        int till = i * size - 1;
+        int when = i * size - size;
 
         if (!matrix[1, when].ToString().Equals(" ") &&
            !matrix[2, when].ToString().Equals(" ") &&
@@ -218,7 +218,7 @@ public class OCR
 
     private static bool CheckForSevens(int i, string[,] matrix)
     {
-        int when = i * 3 - 3;
+        int when = i * size - size;
 
         if (!matrix[0, when + 1].ToString().Equals(" ") &&
            matrix[1, when + 1].ToString().Equals(" ") &&
@@ -232,12 +232,12 @@ public class OCR
 
     private static bool CheckForEights(int i, string[,] matrix)
     {
-        int till = i * 3 - 1;
-        int when = i * 3 - 3;
+        int till = i * size - 1;
+        int when = i * size - size;
 
         if (!matrix[1, when].ToString().Equals(" ") &&
            !matrix[2, when].ToString().Equals(" ") &&
-           !matrix[1, when+1].ToString().Equals(" ") &&
+           !matrix[1, when + 1].ToString().Equals(" ") &&
            !matrix[1, till].ToString().Equals(" ") &&
            !matrix[2, till].ToString().Equals(" ")
            )
@@ -250,8 +250,8 @@ public class OCR
 
     private static bool CheckForNines(int i, string[,] matrix)
     {
-        int till = i * 3 - 1;
-        int when = i * 3 - 3;
+        int till = i * size - 1;
+        int when = i * size - size;
 
         if (!matrix[1, when].ToString().Equals(" ") &&
            matrix[2, when].ToString().Equals(" ") &&
@@ -284,6 +284,194 @@ public class OCR
 
     private static bool CheckSumCalculator(string[] accountCode)
     {
+        return SumCalculator(accountCode) % 11 == 0;
+    }
+
+    private static void CheckSolutionsERR(string[] accountCode)
+    {
+        int solutions = 0;
+        List<string> good = new List<string>();
+        string[] temp = accountCode;
+
+        for (int i = 0; i < accountCode.Length; i++)
+        {
+            temp = accountCode.Select(x => x).ToArray();
+
+            if (accountCode[i].ToString().Equals("0"))
+            {
+                temp[i] = "8";
+
+                if (CheckSumCalculator(temp))
+                {
+                    good.Add(String.Concat(temp));
+                    solutions++;
+                }
+
+                continue;
+            }
+            else if (accountCode[i].ToString().Equals("1"))
+            {
+                temp[i] = "7";
+
+                if (CheckSumCalculator(temp))
+                {
+                    good.Add(String.Concat(temp));
+                    solutions++;
+                }
+
+                continue;
+            }
+            else if (accountCode[i].ToString().Equals("3"))
+            {
+                temp[i] = "9";
+
+                if (CheckSumCalculator(temp))
+                {
+                    good.Add(String.Concat(temp));
+                    solutions++;
+                }
+
+                continue;
+            }
+            else if (accountCode[i].ToString().Equals("5"))
+            {
+                temp[i] = "9";
+
+                if (CheckSumCalculator(temp))
+                {
+                    good.Add(String.Concat(temp));
+                    solutions++;
+                }
+
+                temp[i] = "6";
+
+                if (CheckSumCalculator(temp))
+                {
+                    good.Add(String.Concat(temp));
+                    solutions++;
+                }
+
+                continue;
+            }
+            else if (accountCode[i].ToString().Equals("6"))
+            {
+                temp[i] = "5";
+
+                if (CheckSumCalculator(temp))
+                {
+                    good.Add(String.Concat(temp));
+                    solutions++;
+                }
+
+                temp[i] = "8";
+
+                if (CheckSumCalculator(temp))
+                {
+                    good.Add(String.Concat(temp));
+                    solutions++;
+                }
+
+                continue;
+            }
+            else if (accountCode[i].ToString().Equals("7"))
+            {
+                temp[i] = "1";
+
+                if (CheckSumCalculator(temp))
+                {
+                    good.Add(String.Concat(temp));
+                    solutions++;
+                }
+
+                continue;
+            }
+            else if (accountCode[i].ToString().Equals("8"))
+            {
+                temp[i] = "0";
+
+                if (CheckSumCalculator(temp))
+                {
+                    good.Add(String.Concat(temp));
+                    solutions++;
+                }
+
+                temp[i] = "6";
+
+                if (CheckSumCalculator(temp))
+                {
+                    good.Add(String.Concat(temp));
+                    solutions++;
+                }
+
+                temp[i] = "9";
+
+                if (CheckSumCalculator(temp))
+                {
+                    good.Add(String.Concat(temp));
+                    solutions++;
+                }
+
+                continue;
+            }
+            else if (accountCode[i].ToString().Equals("9"))
+            {
+                temp[i] = "8";
+
+                if (CheckSumCalculator(temp))
+                {
+                    good.Add(String.Concat(temp));
+                    solutions++;
+                }
+
+                temp[i] = "3";
+
+                if (CheckSumCalculator(temp))
+                {
+                    good.Add(String.Concat(temp));
+                    solutions++;
+                }
+
+                temp[i] = "5";
+
+                if (CheckSumCalculator(temp))
+                {
+                    good.Add(String.Concat(temp));
+                    solutions++;
+                }
+
+                continue;
+            }
+        }
+
+        if (solutions == 0)
+        {
+            Console.Write(" ERR");
+        }
+        else if (solutions > 1)
+        {
+            accountCode.ToList().ForEach(n => Console.Write(n));
+
+            Console.Write(" AMB [");
+            for (int i = 0; i < good.Count; i++)
+            {
+                Console.Write("'" + good[i] + "'");
+                if (good.Count - 1 == i)
+                {
+                    Console.Write("]");
+                }else
+                {
+                    Console.Write(", ");
+                }
+            }
+        }
+        else if (solutions == 1)
+        {
+            good.ForEach(n => Console.Write(n));
+        }
+    }
+
+    private static int SumCalculator(string[] accountCode)
+    {
         var sum = 0;
 
         for (int i = accountCode.Length - 1; i >= 0; i--)
@@ -291,6 +479,6 @@ public class OCR
             sum += int.Parse(accountCode[i].ToString()) * (accountCode.Length - i);
         }
 
-        return sum % 11 == 0;
+        return sum;
     }
 }
