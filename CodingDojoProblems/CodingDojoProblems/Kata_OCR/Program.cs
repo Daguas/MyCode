@@ -5,84 +5,22 @@ public class OCR
     public const int nLines = 3;
     public const int nChars = 27;
     public const int size = 3;
+    public static bool invalidCharFound = false;
 
     public static void Main()
     {
         string[,] matrix = ReadFile();
         string[] accountCode = new string[9];
-        bool invalidCharFound = false;
 
-        ParallelLoopResult x = Parallel.For(1, 10, i =>
+        Parallel.For(1, 10, i =>
         {
-            if (CheckForOnes(i, matrix))
-            {
-                accountCode[i - 1] = "1";
-                return;
-            }
-
-            if (CheckForTwos(i, matrix))
-            {
-                accountCode[i - 1] = "2";
-                return;
-            }
-
-            if (CheckForThrees(i, matrix))
-            {
-                accountCode[i - 1] = "3";
-                return;
-            }
-
-            if (CheckForFours(i, matrix))
-            {
-                accountCode[i - 1] = "4";
-                return;
-            }
-
-            if (CheckForFives(i, matrix))
-            {
-                accountCode[i - 1] = "5";
-                return;
-            }
-
-            if (CheckForSixs(i, matrix))
-            {
-                accountCode[i - 1] = "6";
-                return;
-            }
-
-            if (CheckForSevens(i, matrix))
-            {
-                accountCode[i - 1] = "7";
-                return;
-            }
-
-            if (CheckForEights(i, matrix))
-            {
-                accountCode[i - 1] = "8";
-                return;
-            }
-
-            if (CheckForNines(i, matrix))
-            {
-                accountCode[i - 1] = "9";
-                return;
-            }
-
-            if (CheckForZeros(i, matrix))
-            {
-                accountCode[i - 1] = "0";
-                return;
-            }
-
-            accountCode[i - 1] = "?";
-            invalidCharFound = true;
+            accountCode[i - 1] = CheckNumbers(i, matrix);
             return;
         });
 
         if (invalidCharFound)
         {
-            accountCode.ToList().ForEach(n => Console.Write(n));
-            Console.Write(" ILL");
+            CheckSolutionsILL(accountCode, matrix);
         }
         else if (CheckSumCalculator(accountCode))
         {
@@ -96,173 +34,62 @@ public class OCR
         Console.WriteLine();
     }
 
-    private static bool CheckForZeros(int i, string[,] matrix)
+    private static string CheckNumbers(int i, string[,] matrix)
     {
-        int till = i * size - 1;
-        int when = i * size - size;
-
-        if (!matrix[1, when].ToString().Equals(" ") &&
-            matrix[1, when + 1].ToString().Equals(" ") &&
-           !matrix[2, when].ToString().Equals(" ") &&
-           !matrix[1, till].ToString().Equals(" ") &&
-           !matrix[2, till].ToString().Equals(" ")
-           )
+        if (CheckForOnes(i, matrix))
         {
-            return true;
+            return "1";
+            ;
         }
 
-        return false;
-    }
-
-    private static bool CheckForOnes(int i, string[,] matrix)
-    {
-        int till = i * size - 1;
-        int when = i * size - size;
-
-        for (int c = when; c < till; c++)
+        if (CheckForTwos(i, matrix))
         {
-            if (!matrix[0, c].ToString().Equals(" ") ||
-               !matrix[1, c].ToString().Equals(" ") ||
-               !matrix[2, c].ToString().Equals(" "))
-            {
-                return false;
-            }
+            return "2";
         }
 
-        return true;
-    }
-
-    private static bool CheckForTwos(int i, string[,] matrix)
-    {
-        int till = i * size - 1;
-        int when = i * size - size;
-
-        if (!matrix[2, when].ToString().Equals(" ") &&
-           matrix[2, till].ToString().Equals(" "))
+        if (CheckForThrees(i, matrix))
         {
-            return true;
+            return "3";
         }
 
-        return false;
-    }
-
-    private static bool CheckForThrees(int i, string[,] matrix)
-    {
-        int till = i * size - 1;
-        int when = i * size - size;
-
-        if (matrix[1, when].ToString().Equals(" ") &&
-           matrix[2, when].ToString().Equals(" ") &&
-           !matrix[1, when + 1].ToString().Equals(" ") &&
-           !matrix[1, till].ToString().Equals(" ") &&
-           !matrix[2, till].ToString().Equals(" ")
-           )
+        if (CheckForFours(i, matrix))
         {
-            return true;
+            return "4";
         }
 
-        return false;
-    }
-
-    private static bool CheckForFours(int i, string[,] matrix)
-    {
-        int till = i * size - 1;
-        int when = i * size - size;
-
-        if (!matrix[1, when].ToString().Equals(" ") &&
-           matrix[2, when].ToString().Equals(" ") &&
-           matrix[2, till - 1].ToString().Equals(" ") &&
-           !matrix[1, till].ToString().Equals(" ") &&
-           !matrix[2, till].ToString().Equals(" ")
-           )
+        if (CheckForFives(i, matrix))
         {
-            return true;
+            return "5";
         }
 
-        return false;
-    }
-
-    private static bool CheckForFives(int i, string[,] matrix)
-    {
-        int till = i * size - 1;
-        int when = i * size - size;
-
-        if (!matrix[1, when].ToString().Equals(" ") &&
-           matrix[2, when].ToString().Equals(" ") &&
-           matrix[1, till].ToString().Equals(" ") &&
-           !matrix[2, till].ToString().Equals(" ")
-           )
+        if (CheckForSixs(i, matrix))
         {
-            return true;
+            return "6";
+
         }
 
-        return false;
-    }
-
-    private static bool CheckForSixs(int i, string[,] matrix)
-    {
-        int till = i * size - 1;
-        int when = i * size - size;
-
-        if (!matrix[1, when].ToString().Equals(" ") &&
-           !matrix[2, when].ToString().Equals(" ") &&
-           matrix[1, till].ToString().Equals(" ") &&
-           !matrix[2, till].ToString().Equals(" ")
-           )
+        if (CheckForSevens(i, matrix))
         {
-            return true;
+            return "7";
         }
 
-        return false;
-    }
-
-    private static bool CheckForSevens(int i, string[,] matrix)
-    {
-        int when = i * size - size;
-
-        if (!matrix[0, when + 1].ToString().Equals(" ") &&
-           matrix[1, when + 1].ToString().Equals(" ") &&
-           matrix[2, when + 1].ToString().Equals(" "))
+        if (CheckForEights(i, matrix))
         {
-            return true;
+            return "8";
         }
 
-        return false;
-    }
-
-    private static bool CheckForEights(int i, string[,] matrix)
-    {
-        int till = i * size - 1;
-        int when = i * size - size;
-
-        if (!matrix[1, when].ToString().Equals(" ") &&
-           !matrix[2, when].ToString().Equals(" ") &&
-           !matrix[1, when + 1].ToString().Equals(" ") &&
-           !matrix[1, till].ToString().Equals(" ") &&
-           !matrix[2, till].ToString().Equals(" ")
-           )
+        if (CheckForNines(i, matrix))
         {
-            return true;
+            return "9";
         }
 
-        return false;
-    }
-
-    private static bool CheckForNines(int i, string[,] matrix)
-    {
-        int till = i * size - 1;
-        int when = i * size - size;
-
-        if (!matrix[1, when].ToString().Equals(" ") &&
-           matrix[2, when].ToString().Equals(" ") &&
-           !matrix[1, till].ToString().Equals(" ") &&
-           !matrix[2, till].ToString().Equals(" ")
-           )
+        if (CheckForZeros(i, matrix))
         {
-            return true;
+            return "0";
         }
 
-        return false;
+        invalidCharFound = true;
+        return "?";
     }
 
     private static string[,] ReadFile()
@@ -284,7 +111,14 @@ public class OCR
 
     private static bool CheckSumCalculator(string[] accountCode)
     {
-        return SumCalculator(accountCode) % 11 == 0;
+        var sum = 0;
+
+        for (int i = accountCode.Length - 1; i >= 0; i--)
+        {
+            sum += int.Parse(accountCode[i].ToString()) * (accountCode.Length - i);
+        }
+
+        return sum % 11 == 0;
     }
 
     private static void CheckSolutionsERR(string[] accountCode)
@@ -458,7 +292,8 @@ public class OCR
                 if (good.Count - 1 == i)
                 {
                     Console.Write("]");
-                }else
+                }
+                else
                 {
                     Console.Write(", ");
                 }
@@ -470,15 +305,363 @@ public class OCR
         }
     }
 
-    private static int SumCalculator(string[] accountCode)
+    private static void CheckSolutionsILL(string[] accountCode, string[,] matrix)
     {
-        var sum = 0;
+        int invalids = accountCode.Where(x => x.Equals("?")).Count();
 
-        for (int i = accountCode.Length - 1; i >= 0; i--)
+        if (invalids > 1)
         {
-            sum += int.Parse(accountCode[i].ToString()) * (accountCode.Length - i);
+            accountCode.ToList().ForEach(n => Console.Write(n));
+            Console.Write(" ILL");
+        }
+        else
+        {
+            int i = accountCode.ToList().FindIndex(x => x.Equals("?"));
+            CheckBlanksILL(accountCode, i, matrix);
+        }
+    }
+
+    private static void CheckBlanksILL(string[] accountCode, int i, string[,] matrix)
+    {
+        List<string> good = new List<string>();
+        int solutions = 0;
+        int startC = i * size;
+        int endC = i * size + size;
+        string[,] copy = new string[nLines, nChars];
+
+        for (int l = 0; l < 3; l++)
+        {
+            for (int j = startC; j < endC; j++)
+            {
+                copy = (string[,])matrix.Clone();
+
+                if (matrix[l, j].ToString().Equals(" "))
+                {
+                    copy[l, j] = "_";
+                }
+                else
+                {
+                    copy[l, j] = " ";
+                }
+
+                var result = CheckNumbers(i + 1, copy);
+
+                if (!result.Equals("?"))
+                {
+                    var temp = (string[]) accountCode.Clone();
+                    temp[i] = result;
+
+                    if (CheckSumCalculator(temp))
+                    {
+                        good.Add(String.Concat(temp));
+                        solutions++;
+                    }                  
+                }
+            }
         }
 
-        return sum;
+        if (solutions == 0)
+        {
+            accountCode.ToList().ForEach(n => Console.Write(n));
+
+            Console.Write(" ILL");
+        }
+        else if (solutions > 1)
+        {
+            accountCode.ToList().ForEach(n => Console.Write(n));
+
+            Console.Write(" AMB [");
+
+            for (int g = 0; i < good.Count; g++)
+            {
+                Console.Write("'" + good[g] + "'");
+                if (good.Count - 1 == i)
+                {
+                    Console.Write("]");
+                }
+                else
+                {
+                    Console.Write(", ");
+                }
+            }
+        }
+        else if (solutions == 1)
+        {
+            good.ForEach(n => Console.Write(n));
+        }
     }
+
+    #region Check Numbers
+    // Fixed
+    private static bool CheckForZeros(int i, string[,] matrix)
+    {
+        int till = i * size - 1;
+        int when = i * size - size;
+
+        for (int c = when; c <= till; c++)
+        {
+            for (int l = 0; l < 3; l++)
+            {
+                if (((c == till || c == when) && (l == 1 || l == 2)) || (c == when + 1) && (l == 0 || l == 2))
+                {
+                    if (matrix[l, c].ToString().Equals(" "))
+                    {
+                        return false;
+                    }
+                }
+                else if (!matrix[l, c].ToString().Equals(" "))
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    // Fixed
+    private static bool CheckForOnes(int i, string[,] matrix)
+    {
+        int till = i * size - 1;
+        int when = i * size - size;
+
+        for (int c = when; c <= till; c++)
+        {
+            for (int l = 0; l < 3; l++)
+            {
+                if (c == till && (l == 1 || l == 2))
+                {
+                    if (matrix[l, c].ToString().Equals(" "))
+                    {
+                        return false;
+                    }
+                }
+                else if (!matrix[l, c].ToString().Equals(" "))
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    // Fixed
+    private static bool CheckForTwos(int i, string[,] matrix)
+    {
+        int till = i * size - 1;
+        int when = i * size - size;
+
+        for (int c = when; c <= till; c++)
+        {
+            for (int l = 0; l < 3; l++)
+            {
+                if ((c == till && l == 1) || (c == when + 1) || (c == when && l == 2))
+                {
+                    if (matrix[l, c].ToString().Equals(" "))
+                    {
+                        return false;
+                    }
+                }
+                else if (!matrix[l, c].ToString().Equals(" "))
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    // Fixed
+    private static bool CheckForThrees(int i, string[,] matrix)
+    {
+        int till = i * size - 1;
+        int when = i * size - size;
+
+        for (int c = when; c <= till; c++)
+        {
+            for (int l = 0; l < 3; l++)
+            {
+                if (((c == till && (l == 1 || l == 2)) || c == when + 1))
+                {
+                    if (matrix[l, c].ToString().Equals(" "))
+                    {
+                        return false;
+                    }
+                }
+                else if (!matrix[l, c].ToString().Equals(" "))
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    // Fixed
+    private static bool CheckForFours(int i, string[,] matrix)
+    {
+        int end = i * size - 1;
+        int start = i * size - size;
+
+        for (int c = start; c <= end; c++)
+        {
+            for (int l = 0; l < 3; l++)
+            {
+                if (((c == end && (l == 1 || l == 2)) || c == start + 1 && l == 1) || c == start && l == 1)
+                {
+                    if (matrix[l, c].ToString().Equals(" "))
+                    {
+                        return false;
+                    }
+                }
+                else if (!matrix[l, c].ToString().Equals(" "))
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    // Fixed
+    private static bool CheckForFives(int i, string[,] matrix)
+    {
+        int end = i * size - 1;
+        int start = i * size - size;
+
+        for (int c = start; c <= end; c++)
+        {
+            for (int l = 0; l < 3; l++)
+            {
+                if ((c == start && l == 1 ) || (c == start + 1) || (c == end && l == 2))
+                {
+                    if (matrix[l, c].ToString().Equals(" "))
+                    {
+                        return false;
+                    }
+                }
+                else if (!matrix[l, c].ToString().Equals(" "))
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    // Fixed
+    private static bool CheckForSixs(int i, string[,] matrix)
+    {
+        int till = i * size - 1;
+        int when = i * size - size;
+
+        for (int c = when; c <= till; c++)
+        {
+            for (int l = 0; l < 3; l++)
+            {
+                if ((c == when && (l == 1 || l == 2)) || (c == when + 1) || (c == till && l == 2))
+                {
+                    if (matrix[l, c].ToString().Equals(" "))
+                    {
+                        return false;
+                    }
+                }
+                else if (!matrix[l, c].ToString().Equals(" "))
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+    
+    // Fixed
+    private static bool CheckForSevens(int i, string[,] matrix)
+    {
+        int till = i * size - 1;
+        int when = i * size - size;
+
+        for (int c = when; c <= till; c++)
+        {
+            for (int l = 0; l < 3; l++)
+            {
+                if ((c == till && (l == 1 || l == 2)) || (c == when +1 && l == 0))
+                {
+                    if (matrix[l, c].ToString().Equals(" "))
+                    {
+                        return false;
+                    }
+                }
+                else if (!matrix[l, c].ToString().Equals(" "))
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    // Fixed
+    private static bool CheckForEights(int i, string[,] matrix)
+    {
+        int till = i * size - 1;
+        int when = i * size - size;
+
+        for (int c = when; c <= till; c++)
+        {
+            for (int l = 0; l < 3; l++)
+            {
+                if (((c == till || c == when) && (l == 1 || l == 2)) || (c == when + 1))
+                {
+                    if (matrix[l, c].ToString().Equals(" "))
+                    {
+                        return false;
+                    }
+                }
+                else if (!matrix[l, c].ToString().Equals(" "))
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    // Fixed
+    private static bool CheckForNines(int i, string[,] matrix)
+    {
+        int till = i * size - 1;
+        int when = i * size - size;
+
+        for (int c = when; c <= till; c++)
+        {
+            for (int l = 0; l < 3; l++)
+            {
+                if (l == 1 || (c == when + 1) || (c == till && l == 2))
+                {
+                    if (matrix[l, c].ToString().Equals(" "))
+                    {
+                        return false;
+                    }
+                }
+                else if (!matrix[l, c].ToString().Equals(" "))
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    #endregion
+
 }
