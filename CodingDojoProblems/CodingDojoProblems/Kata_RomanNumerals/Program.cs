@@ -10,6 +10,94 @@ public class RomanNumerals
         string romanValue = ConvertToRoman(value);
 
         Console.WriteLine(romanValue);
+
+        string normalValue = ConvertToNormal(romanValue);
+
+        Console.WriteLine(normalValue);
+    }
+
+    private static string ConvertToNormal(string romanValue)
+    {
+        int thousands = 0;
+        int hundreds = 0;
+        int tens = 0;
+        int zers = 0;
+        for (int i = 0; i < romanValue.Length; i++)
+        {
+            if (hundreds == 0 && romanValue[i].ToString().Equals("M"))
+            {
+                thousands++;
+                if (i != romanValue.Length - 1 && romanValue[i + 1].ToString().Equals(romanValue[i].ToString()))
+                {
+                    continue;
+                }
+                else if (i != romanValue.Length - 1 && romanValue[i + 1].ToString().Equals("C"))
+                {
+                    continue;
+                }
+            }
+            else if (hundreds<9 && romanValue[i].ToString().Equals("C"))
+            {
+                hundreds++;
+                if (i != romanValue.Length - 1 && romanValue[i + 1].ToString().Equals(romanValue[i].ToString()))
+                {
+                    continue;
+                }
+                else if (i != romanValue.Length - 1 && romanValue[i + 1].ToString().Equals("M"))
+                {
+                    hundreds = 9;
+                }
+                else if (i != romanValue.Length - 1 && romanValue[i + 1].ToString().Equals("D"))
+                {
+                    hundreds = 4;
+                }
+            }
+            else if (hundreds == 0 && romanValue[i].ToString().Equals("D"))
+            {
+                hundreds = 5;
+            }
+            else if (tens < 9 && romanValue[i].ToString().Equals("X"))
+            {
+                tens++;
+                if (i != romanValue.Length - 1 && romanValue[i + 1].ToString().Equals(romanValue[i].ToString()))
+                {
+                    continue;
+                }
+                else if (i != romanValue.Length - 1 && romanValue[i + 1].ToString().Equals("C"))
+                {
+                    tens = 9;
+                }
+                else if (i != romanValue.Length - 1 && romanValue[i + 1].ToString().Equals("L"))
+                {
+                    tens = 4;
+                }
+            }
+            else if (tens == 0 && romanValue[i].ToString().Equals("L"))
+            {
+                tens = 5;
+            }
+            else if (romanValue[i].ToString().Equals("I"))
+            {
+                zers++;
+                if (i != romanValue.Length - 1 && romanValue[i + 1].ToString().Equals(romanValue[i].ToString()))
+                {
+                    continue;
+                }
+                else if (i != romanValue.Length - 1 && romanValue[i + 1].ToString().Equals("X"))
+                {
+                    zers = 9;
+                }
+                else if (i != romanValue.Length - 1 && romanValue[i + 1].ToString().Equals("V"))
+                {
+                    zers = 4;
+                }
+            }
+            else if (i != romanValue.Length - 1 && tens == 0 && romanValue[i].ToString().Equals("V"))
+            {
+                zers = 5;
+            }
+        }
+        return (thousands * 1000 + hundreds * 100 + tens * 10 + zers).ToString();
     }
 
     private static string ConvertToRoman(int num)
@@ -21,7 +109,7 @@ public class RomanNumerals
         for (int i = 0; i <= size; i++)
         {
             int house = int.Parse(num.ToString()[i].ToString());
-        
+
             result += CheckNines(size - i, house);
             result += CheckFives(size - i, house);
             result += CheckFours(size - i, house);
@@ -38,6 +126,12 @@ public class RomanNumerals
         {
             switch (i)
             {
+                case 3:
+                    for (int j = 0; j < value; j++)
+                    {
+                        result += "M";
+                    }
+                    break;
                 case 2:
                     result += "CM";
                     break;
@@ -100,6 +194,12 @@ public class RomanNumerals
         {
             switch (i)
             {
+                case 3:
+                    for (int j = 0; j < value; j++)
+                    {
+                        result += "M";
+                    }
+                    break;
                 case 2:
                     result += "CD";
                     break;
