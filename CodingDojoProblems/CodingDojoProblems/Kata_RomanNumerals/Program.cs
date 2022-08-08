@@ -16,7 +16,7 @@ public class RomanNumerals
         Console.WriteLine(normalValue);
     }
 
-    private static string ConvertToNormal(string romanValue)
+    public static string ConvertToNormal(string romanValue)
     {
         int thousands = 0;
         int hundreds = 0;
@@ -38,12 +38,7 @@ public class RomanNumerals
             }
             else if (hundreds<9 && romanValue[i].ToString().Equals("C"))
             {
-                hundreds++;
-                if (i != romanValue.Length - 1 && romanValue[i + 1].ToString().Equals(romanValue[i].ToString()))
-                {
-                    continue;
-                }
-                else if (i != romanValue.Length - 1 && romanValue[i + 1].ToString().Equals("M"))
+                hundreds++;if (i != romanValue.Length - 1 && romanValue[i + 1].ToString().Equals("M"))
                 {
                     hundreds = 9;
                 }
@@ -59,11 +54,7 @@ public class RomanNumerals
             else if (tens < 9 && romanValue[i].ToString().Equals("X"))
             {
                 tens++;
-                if (i != romanValue.Length - 1 && romanValue[i + 1].ToString().Equals(romanValue[i].ToString()))
-                {
-                    continue;
-                }
-                else if (i != romanValue.Length - 1 && romanValue[i + 1].ToString().Equals("C"))
+                if (i != romanValue.Length - 1 && romanValue[i + 1].ToString().Equals("C"))
                 {
                     tens = 9;
                 }
@@ -79,28 +70,27 @@ public class RomanNumerals
             else if (romanValue[i].ToString().Equals("I"))
             {
                 zers++;
-                if (i != romanValue.Length - 1 && romanValue[i + 1].ToString().Equals(romanValue[i].ToString()))
-                {
-                    continue;
-                }
-                else if (i != romanValue.Length - 1 && romanValue[i + 1].ToString().Equals("X"))
+                if (i != romanValue.Length - 1 && romanValue[i + 1].ToString().Equals("X"))
                 {
                     zers = 9;
+                    break;
                 }
                 else if (i != romanValue.Length - 1 && romanValue[i + 1].ToString().Equals("V"))
                 {
                     zers = 4;
+                    break;
                 }
             }
-            else if (i != romanValue.Length - 1 && tens == 0 && romanValue[i].ToString().Equals("V"))
+            else if (zers == 0 && romanValue[i].ToString().Equals("V"))
             {
                 zers = 5;
+                break;
             }
         }
         return (thousands * 1000 + hundreds * 100 + tens * 10 + zers).ToString();
     }
 
-    private static string ConvertToRoman(int num)
+    public static string ConvertToRoman(int num)
     {
         int size = num.ToString().Length - 1;
 
