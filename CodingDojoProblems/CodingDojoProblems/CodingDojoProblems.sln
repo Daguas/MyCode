@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kata_SocialNetwork", "Kata_
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kata_FizzBuzz", "Kata_FizzBuzz\Kata_FizzBuzz.csproj", "{1F596827-5A31-4C15-8155-6537F6E832A6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kata_RomanNumerals", "Kata_RomanNumerals\Kata_RomanNumerals.csproj", "{DDB2EB6F-8A2D-4855-B077-60400EA79E8C}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kata_OCR", "Kata_OCR\Kata_OCR.csproj", "{B3C9D218-0CE1-411C-8989-206379B0AF1A}"
 EndProject
 Global
@@ -35,6 +37,10 @@ Global
 		{1F596827-5A31-4C15-8155-6537F6E832A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F596827-5A31-4C15-8155-6537F6E832A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F596827-5A31-4C15-8155-6537F6E832A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDB2EB6F-8A2D-4855-B077-60400EA79E8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDB2EB6F-8A2D-4855-B077-60400EA79E8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDB2EB6F-8A2D-4855-B077-60400EA79E8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDB2EB6F-8A2D-4855-B077-60400EA79E8C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B3C9D218-0CE1-411C-8989-206379B0AF1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B3C9D218-0CE1-411C-8989-206379B0AF1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3C9D218-0CE1-411C-8989-206379B0AF1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
