@@ -2,9 +2,13 @@
 
 public class FizzBuzz
 {
+    public static int size = 100;
+
+    public static string[] array = new string[size];
+
     public static void Main()
     {
-        for (int i = 1; i < 100; i++)
+        Parallel.For(1, size, i =>
         {
             var stringResult = "";
 
@@ -23,8 +27,10 @@ public class FizzBuzz
                 stringResult = i.ToString();
             }
 
-            Console.WriteLine(stringResult);
-        }
+            array[i-1] = stringResult;
+        });
+
+        array.ToList().ForEach(x => Console.WriteLine(x));
     }
 
     private static bool CheckForBuzz(int i)
