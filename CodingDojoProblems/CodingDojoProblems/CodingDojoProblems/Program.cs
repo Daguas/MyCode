@@ -12,27 +12,19 @@ public class Diamond
 
         MathRight(0, end);
 
-        MathLeft(end - 1, 0);
+        MathLeft(end, 0);
     }
 
     private static int FindPosition(char v)
     {
-        for (int i = 0; i < alphabeth.Length; i++)
-        {
-            if (alphabeth[i].ToString().ToLower().Equals(v.ToString().ToLower()))
-            {
-                return i + 1;
-            }
-        }
-
-        return 0;
+         return alphabeth.ToList().FindIndex(x => x.ToString().ToLower().Equals(v.ToString().ToLower()));
     }
 
     private static void MathRight(int start, int stop)
     {
-        for (int i = start; i < stop; i++)
+        for (int i = start; i <= stop; i++)
         {
-            PrintLine(alphabeth[i], (i * 2 - 1), (stop - 1 - i));
+            PrintLine(alphabeth[i], (i * 2 - 1), (stop- i));
         }
     }
 
